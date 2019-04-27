@@ -75,11 +75,20 @@
                     app:layout_constraintTop_toTopOf="@+id/map" />
 
                 <ImageView
-                    android:id="@+id/like"
+                android:id="@+id/like"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/ic_like"
+                app:layout_constraintStart_toEndOf="@+id/comments"
+                app:layout_constraintTop_toTopOf="@+id/comments" />
+
+                <ImageView
+                    android:id="@+id/liked"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_like"
+                    android:src="@drawable/ic_liked"
                     app:layout_constraintStart_toEndOf="@+id/comments"
                     app:layout_constraintTop_toTopOf="@+id/comments" />
 

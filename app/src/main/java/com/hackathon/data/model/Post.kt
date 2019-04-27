@@ -11,8 +11,10 @@ data class Post(
         val description: String? = null,
         val postDate: Date,
         val userId: String,
-        val location: Location,
+        val location: String,
         val likeCount: Int,
-        val alreadyLiked: Boolean
+        val alreadyLiked: Boolean,
+        val userPhoto: String? = null,
+        val userName: String? = null
 
 )

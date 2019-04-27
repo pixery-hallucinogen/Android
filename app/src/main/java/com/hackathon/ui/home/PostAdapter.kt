@@ -25,20 +25,22 @@ class PostAdapter(private val context: Context, private val myDataset: List<Post
     override fun onBindViewHolder(holder: PostHolder, position: Int) {
         holder.card.preventCornerOverlap = false
         holder.card.useCompatPadding = true
-        holder.card.setOnClickListener {
-            Notify.send(context, "Size özel kampanya", "Daha önce ilgilenmiş olduğunuz ${myDataset[position].postName} ürününde size özel kampanya.")
-        }
+
+        //holder.card.setOnClickListener {
+        //    Notify.send(context, "Size özel kampanya", "Daha önce ilgilenmiş olduğunuz ${myDataset[position].postName} ürününde size özel kampanya.")
+        //}
 
         Picasso.get().load(myDataset[position].media).into(holder.image)
-        holder.price.text = myDataset[position].price
-        if (myDataset[position].currentPrice != null) {
-            holder.price.paintFlags = holder.price.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            holder.currentPrice.text = myDataset[position].currentPrice
-            holder.currentPrice.visibility = View.VISIBLE
+        holder.person.text = myDataset[position].userName
+        Picasso.get().load(myDataset[position].userPhoto).into(holder.profileImage)
+        holder.likeNumber.text = myDataset[position].likeCount.toString()
+
+        if (myDataset[position].alreadyLiked) {
+            holder.like.visibility = View.GONE
         } else {
-            holder.currentPrice.visibility = View.GONE
+            holder.liked.visibility = View.GONE
         }
-        holder.taksit.text = myDataset[position].taksit
+
     }
 
     override fun getItemCount() = myDataset.size

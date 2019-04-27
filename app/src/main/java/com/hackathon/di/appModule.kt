@@ -2,7 +2,7 @@ package com.hackathon.di
 
 import com.hackathon.Constants
 import com.hackathon.data.repository.CommentRepository
-import com.hackathon.data.repository.PurchaseRepository
+import com.hackathon.data.repository.PostRepository
 import com.hackathon.data.repository.UserRepository
 import com.hackathon.di.impl.AndroidLogger
 import com.hackathon.di.module.ContextModule
@@ -35,7 +35,7 @@ val appModule = module {
     // Repositories
     factory { UserRepository(androidContext(), get(), get()) }
     factory { CommentRepository(androidContext(), get(), get()) }
-    factory { PurchaseRepository(androidContext(), get(), get()) }
+    factory { PostRepository(androidContext(), get(), get()) }
 
     // Retrofit
     single { RetrofitClient(androidContext()) }

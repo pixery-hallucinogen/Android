@@ -1,11 +1,16 @@
 package com.hackathon.di.module
 
 import android.content.Context
+import com.hackathon.Constants
 import com.hackathon.R
 import com.hackathon.data.api.CommentApi
-import com.hackathon.data.api.PurchaseApi
+import com.hackathon.data.api.PostApi
 import com.hackathon.data.api.UserApi
+import com.hackathon.utils.PreferenceUtils
+import com.hackathon.utils.get
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -20,7 +25,7 @@ class RetrofitClient(
 ) {
     fun userApi(): UserApi = getRetrofit().create(UserApi::class.java)
     fun commentApi(): CommentApi = getRetrofit().create(CommentApi::class.java)
-    fun purchaseApi(): PurchaseApi = getRetrofit().create(PurchaseApi::class.java)
+    fun purchaseApi(): PostApi = getRetrofit().create(PostApi::class.java)
 
     private fun getRetrofit(): Retrofit {
 
@@ -61,6 +66,16 @@ class RetrofitClient(
             return OkHttpClient.Builder()
                     .sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
                     .addInterceptor(loggingInterceptor)
+                    .addInterceptor(object: Interceptor {
+                        override fun intercept(chain: Interceptor.Chain): Response {
+                            val token: String? = PreferenceUtils.defaultPrefs(context)[Constants.JWT]
+                            if (token != null) {
+                                val request = chain.request().newBuilder().addHeader("Authorization", "Bearer $token").build();
+                                return chain.proceed(request);
+                            }
+                            return chain.proceed(chain.request())
+                        }
+                    })
                     .hostnameVerifier(object : HostnameVerifier {
                         override fun verify(hostname: String, session: SSLSession): Boolean {
                             return true

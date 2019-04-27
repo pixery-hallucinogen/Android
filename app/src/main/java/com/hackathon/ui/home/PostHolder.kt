@@ -12,6 +12,7 @@ class PostHolder(val view: View) : RecyclerView.ViewHolder(view) {
     val image: ImageView = view.imageView
     val map: ImageView = view.map
     val like: ImageView = view.like
+    val liked: ImageView = view.liked
     val comments: ImageView = view.comments
     val profileImage: CircleImageView = view.profile_image
     val likeNumber: TextView = view.likeNumber

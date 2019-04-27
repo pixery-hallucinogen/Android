@@ -4,7 +4,7 @@ import android.content.Context
 import com.hackathon.Constants
 import com.hackathon.R
 import com.hackathon.data.api.ApiResult
-import com.hackathon.data.api.PurchaseApi
+import com.hackathon.data.api.PostApi
 import com.hackathon.data.error.ServerError
 import com.hackathon.data.model.PurchaseRequest
 import com.hackathon.di.ILogger
@@ -14,10 +14,10 @@ import com.hackathon.utils.PreferenceUtils
 import com.hackathon.utils.get
 
 
-class PurchaseRepository(
+class PostRepository(
         private val context: Context,
         private val logger: ILogger,
-        private val purchaseApi: PurchaseApi
+        private val purchaseApi: PostApi
 ) {
     fun purchase(productId: Int, storeId: Int, amount: Int): ApiResult<Unit> {
         val uid: Int? = PreferenceUtils.defaultPrefs(context)[Constants.UID]
