@@ -1,7 +1,7 @@
 package com.hackathon.ui.home
 
 import android.content.Context
-import com.hackathon.data.model.Product
+import com.hackathon.data.model.Post
 import com.hackathon.di.ILogger
 import com.hackathon.di.module.SchedulersModule
 import com.hackathon.domain.auth.AuthTask
@@ -16,7 +16,7 @@ class HomeViewModel(
         private val authTask: AuthTask
 ) : BaseViewModel(schedulersModule) {
     val onLoggedOut = ObservableResult<Unit>()
-    val onRecommendationsFetched = ObservableResult<List<Product>>()
+    val onRecommendationsFetched = ObservableResult<List<Post>>()
 
     fun logout(context: Context) {
         authTask.logout(context)
@@ -25,7 +25,7 @@ class HomeViewModel(
 
     fun fetchRecommendations() {
         val data = listOf(
-                Product(_id = "1",
+                Post(_id = "1",
                         productId = 1,
                         productName = "Papatya Küresi",
                         tags = asList("Çiçek"),
@@ -33,7 +33,7 @@ class HomeViewModel(
                         currentPrice = "62,99TL",
                         price = "99,99TL",
                         taksit = "6 x 10,49 TL Taksit Seçeneği"),
-                Product(_id = "2",
+                Post(_id = "2",
                         productId = 2,
                         productName = "Aşkın Simgesi Güller ve Papatyalar",
                         tags = asList("Çiçek"),
@@ -41,7 +41,7 @@ class HomeViewModel(
                         currentPrice = "59,99TL",
                         price = "79,99TL",
                         taksit = "6 x 9,99 TL Taksit Seçeneği"),
-                Product(_id = "3",
+                Post(_id = "3",
                         productId = 3,
                         productName = "Mutluluk Kutusu",
                         tags = asList("Çiçek"),
@@ -49,7 +49,7 @@ class HomeViewModel(
                         currentPrice = "89,99TL",
                         price = "99,99TL",
                         taksit = "6 x 14,99 TL Taksit Seçeneği"),
-                Product(_id = "4",
+                Post(_id = "4",
                         productId = 4,
                         productName = "Doğal Ahşap Kütükte Papatya Aranjmanı",
                         tags = asList("Çiçek"),
@@ -57,7 +57,7 @@ class HomeViewModel(
                         currentPrice = "46,99TL",
                         price = "55,99TL",
                         taksit = "6 x 7,83 TL Taksit Seçeneği"),
-                Product(_id = "5",
+                Post(_id = "5",
                         productId = 5,
                         productName = "Beyaz Papatyalar ve Çikolata",
                         tags = asList("Set"),

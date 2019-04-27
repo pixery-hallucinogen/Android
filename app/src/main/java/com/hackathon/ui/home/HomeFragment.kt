@@ -33,12 +33,12 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
             statusBarColor = ContextCompat.getColor(requireActivity(), R.color.primaryDarkColor)
         }
 
-        dataBinding.progressLayout.visibility = View.VISIBLE
-        dataBinding.recommendationsRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        dataBinding.cameraButton.setOnClickListener {
-            navigateToCamera()
-        }
+        dataBinding.postRecyclerView.layoutManager = LinearLayoutManager(context)
+
+       // dataBinding.cameraButton.setOnClickListener {
+       //     navigateToCamera()
+       // }
 
         viewModel.fetchRecommendations()
 
@@ -58,11 +58,10 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
 
         viewModel.onRecommendationsFetched.runWhenFinished(this,
                 onSuccess = {
-                    dataBinding.progressLayout.visibility = View.GONE
-                    dataBinding.recommendationsRecyclerView.adapter = ProductAdapter(requireContext(), it)
+                    dataBinding.postRecyclerView.adapter = PostAdapter(requireContext(), it)
                 },
                 onError = {
-                    dataBinding.progressLayout.visibility = View.GONE
+
                 })
     }
 
