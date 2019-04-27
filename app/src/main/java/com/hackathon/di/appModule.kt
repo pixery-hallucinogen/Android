@@ -9,10 +9,10 @@ import com.hackathon.di.module.RetrofitClient
 import com.hackathon.di.module.SchedulersModule
 import com.hackathon.domain.auth.AuthTask
 import com.hackathon.domain.auth.PostTask
-import com.hackathon.ui.camera.CameraViewModel
 import com.hackathon.ui.comments.CommentsViewModel
 import com.hackathon.ui.home.HomeViewModel
 import com.hackathon.ui.login.LoginViewModel
+import com.hackathon.ui.maps.MapsViewModel
 import com.hackathon.ui.splash.SplashViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.koin.viewModel
@@ -43,6 +43,6 @@ val appModule = module {
     viewModel { HomeViewModel(get(), get(), get(), get()) }
     viewModel { SplashViewModel(get(), get()) }
     viewModel { LoginViewModel(get(), get(), get()) }
-    viewModel { CameraViewModel(get(), get()) }
     viewModel { CommentsViewModel(get(), get(), get(), get()) }
+    viewModel { MapsViewModel(get(), get(), get(), get()) }
 }

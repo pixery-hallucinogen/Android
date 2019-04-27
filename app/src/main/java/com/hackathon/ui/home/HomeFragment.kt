@@ -93,13 +93,15 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
         }
     }
 
-    private fun navigateToCamera() {
-        navigate(HomeFragmentDirections.actionHomeFragmentToCameraFragment())
-    }
-
     fun navigateToComments(postId: Int) {
         val bundle = bundleOf("postId" to postId)
         navigate(R.id.comments_fragment, bundle)
+    }
+
+
+    fun navigateToMaps(lat: Double, lon: Double, userName: String) {
+        val bundle = bundleOf("lat" to lat.toFloat(), "lon" to lon.toFloat(), "userName" to userName)
+        navigate(R.id.maps_fragment, bundle)
     }
 
     private fun navigateToLogin() {

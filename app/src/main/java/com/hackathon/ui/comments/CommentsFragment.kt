@@ -34,7 +34,6 @@ class CommentsFragment : BaseFragment<CommentsViewModel>(CommentsViewModel::clas
 
         dataBinding = CommentsFragmentBinding.inflate(inflater, container, false)
         dataBinding.lifecycleOwner = this
-        dataBinding.lifecycleOwner = this
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
         requireActivity().window.apply {

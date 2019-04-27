@@ -32,6 +32,10 @@ class PostAdapter(private val homeFragment: HomeFragment, private val myDataset:
         holder.comments.setOnClickListener {
             homeFragment.navigateToComments(myDataset[position].id)
         }
+        holder.map.setOnClickListener {
+            homeFragment.navigateToMaps(myDataset[position].latitude, myDataset[position].longitude, myDataset[position].userName
+                    ?: "")
+        }
 
         Picasso.get().load(myDataset[position].media).into(holder.image)
         holder.person.text = myDataset[position].userName

@@ -51,13 +51,6 @@
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <action
-            android:id="@+id/action_home_fragment_to_camera_fragment"
-            app:destination="@id/camera_fragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
             android:id="@+id/action_home_fragment_to_login_fragment"
             app:destination="@id/login_fragment"
             app:enterAnim="@anim/nav_default_enter_anim"
@@ -72,25 +65,44 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_home_fragment_to_maps_fragment"
+            app:destination="@id/maps_fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
-    <!-- Camera Screen -->
+    <!-- Maps Screen -->
     <fragment
-        android:id="@+id/camera_fragment"
-        android:name="com.hackathon.ui.camera.CameraFragment"
-        android:label="CameraFragment"
-        tools:layout="@layout/camera_fragment" />
+        android:id="@+id/maps_fragment"
+        android:name="com.hackathon.ui.maps.MapsFragment"
+        android:label="MapsFragment"
+        tools:layout="@layout/maps_fragment">
+        <argument
+            android:name="lat"
+            android:defaultValue="0.0"
+            app:argType="float" />
+        <argument
+            android:name="lon"
+            android:defaultValue="0.0"
+            app:argType="float" />
+        <argument
+            android:name="userName"
+            app:argType="string" />
+    </fragment>
 
     <!-- Comments Screen -->
     <fragment
         android:id="@+id/comments_fragment"
         android:name="com.hackathon.ui.comments.CommentsFragment"
         android:label="CommentsFragment"
-        tools:layout="@layout/comments_fragment" >
+        tools:layout="@layout/comments_fragment">
         <argument
             android:name="postId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

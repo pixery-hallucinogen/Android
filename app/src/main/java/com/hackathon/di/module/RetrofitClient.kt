@@ -68,7 +68,6 @@ class RetrofitClient(
                     .addInterceptor(object : Interceptor {
                         override fun intercept(chain: Interceptor.Chain): Response {
                             val token: String? = PreferenceUtils.defaultPrefs(context)[Constants.JWT]
-                            Log.d("Pixery", token)
                             if (!token.isNullOrEmpty()) {
                                 val request = chain.request().newBuilder().addHeader("Authorization", "Bearer $token").build()
                                 return chain.proceed(request)

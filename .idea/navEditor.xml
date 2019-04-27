@@ -58,6 +58,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_home_fragment_to_maps_fragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -80,6 +85,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="maps_fragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="497" />
+                            <option name="y" value="-582" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
