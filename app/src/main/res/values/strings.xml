@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fertilizer</string>
+    <string name="app_name">Hallucinogen</string>
     <string name="api_url" translatable="false">http://fertilizer.y97khcqbsp.us-west-2.elasticbeanstalk.com</string>
     <string name="errorOccurred">Error Occurred</string>
     <string name="retry">Retry</string>
