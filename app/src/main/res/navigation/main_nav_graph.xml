@@ -65,6 +65,13 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@+id/login_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_comments_fragment"
+            app:destination="@id/comments_fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <!-- Camera Screen -->
@@ -73,5 +80,17 @@
         android:name="com.hackathon.ui.camera.CameraFragment"
         android:label="CameraFragment"
         tools:layout="@layout/camera_fragment" />
+
+    <!-- Comments Screen -->
+    <fragment
+        android:id="@+id/comments_fragment"
+        android:name="com.hackathon.ui.comments.CommentsFragment"
+        android:label="CommentsFragment"
+        tools:layout="@layout/comments_fragment" >
+        <argument
+            android:name="postId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 
 </navigation>

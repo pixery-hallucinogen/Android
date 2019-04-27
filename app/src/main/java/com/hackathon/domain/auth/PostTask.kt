@@ -3,10 +3,7 @@ package com.hackathon.domain.auth
 import com.hackathon.data.error.BaseError
 import com.hackathon.data.error.LoginError
 import com.hackathon.data.error.LoginErrorType
-import com.hackathon.data.model.CommentRequest
-import com.hackathon.data.model.CreatePostRequest
-import com.hackathon.data.model.GetPostsResponse
-import com.hackathon.data.model.LikeRequest
+import com.hackathon.data.model.*
 import com.hackathon.data.repository.PostRepository
 import com.hackathon.di.ILogger
 import com.hackathon.domain.base.BaseTask
@@ -27,19 +24,28 @@ class PostTask(
         }
     }
 
-    fun commentPost(postId: Int, comment: String): SingleResult<Unit, BaseError> {
-        return postRepository.commentPost(CommentRequest(postId, comment)).map {
+    fun getComments(postId: Int): SingleResult<GetCommentResponse, BaseError> {
+        return postRepository.getComments(postId).map {
             if (it.isOk)
-                Ok(Unit)
+                it
             else
                 LoginError(LoginErrorType.INVALID_INFO).toErr()
         }
     }
 
-    fun likePost(postId: Int): SingleResult<Unit, BaseError> {
+    fun commentPost(postId: Int, comment: String): SingleResult<CommentRequest, BaseError> {
+        return postRepository.commentPost(CommentRequest(postId, comment)).map {
+            if (it.isOk)
+                Ok(CommentRequest(postId, comment))
+            else
+                LoginError(LoginErrorType.INVALID_INFO).toErr()
+        }
+    }
+
+    fun likePost(postId: Int): SingleResult<LikeRequest, BaseError> {
         return postRepository.likePost(LikeRequest(postId)).map {
             if (it.isOk)
-                Ok(Unit)
+                Ok(LikeRequest(postId))
             else
                 LoginError(LoginErrorType.INVALID_INFO).toErr()
         }

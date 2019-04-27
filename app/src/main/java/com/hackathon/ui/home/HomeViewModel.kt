@@ -2,7 +2,9 @@ package com.hackathon.ui.home
 
 import android.content.Context
 import com.hackathon.data.error.ServerError
+import com.hackathon.data.model.CommentRequest
 import com.hackathon.data.model.GetPostsResponse
+import com.hackathon.data.model.LikeRequest
 import com.hackathon.di.ILogger
 import com.hackathon.di.module.SchedulersModule
 import com.hackathon.domain.auth.AuthTask
@@ -19,12 +21,42 @@ class HomeViewModel(
         private val postTask: PostTask
 ) : BaseViewModel(schedulersModule) {
     val onPostsFetched = ObservableResult<GetPostsResponse>()
+    val onUserFetched = ObservableResult<Unit>()
+    val onPostLiked = ObservableResult<LikeRequest>()
+    val onPostCommented = ObservableResult<CommentRequest>()
     val onLoggedOut = ObservableResult<Unit>()
 
     fun getPosts() {
         subscribe(
                 event = onPostsFetched,
                 disposable = { postTask.getPosts() },
+                onSuccess = { it },
+                onError = { Err(ServerError(it.message ?: "Unknown Error")) }
+        )
+    }
+
+    fun likePost(postId: Int) {
+        subscribe(
+                event = onPostLiked,
+                disposable = { postTask.likePost(postId) },
+                onSuccess = { it },
+                onError = { Err(ServerError(it.message ?: "Unknown Error")) }
+        )
+    }
+
+    fun commentPost(postId: Int, comment: String) {
+        subscribe(
+                event = onPostCommented,
+                disposable = { postTask.commentPost(postId, comment) },
+                onSuccess = { it },
+                onError = { Err(ServerError(it.message ?: "Unknown Error")) }
+        )
+    }
+
+    fun getAccount() {
+        subscribe(
+                event = onUserFetched,
+                disposable = { authTask.getAccount() },
                 onSuccess = { it },
                 onError = { Err(ServerError(it.message ?: "Unknown Error")) }
         )

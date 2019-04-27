@@ -5,10 +5,7 @@ import com.hackathon.R
 import com.hackathon.data.api.ApiResult
 import com.hackathon.data.api.PostApi
 import com.hackathon.data.error.ServerError
-import com.hackathon.data.model.CommentRequest
-import com.hackathon.data.model.CreatePostRequest
-import com.hackathon.data.model.GetPostsResponse
-import com.hackathon.data.model.LikeRequest
+import com.hackathon.data.model.*
 import com.hackathon.di.ILogger
 import com.hackathon.lib.typing.Ok
 import com.hackathon.lib.typing.single
@@ -23,6 +20,16 @@ class PostRepository(
         return postApi.getPosts().flatMap {
             if (it.isSuccessful) {
                 Ok(it.body() as GetPostsResponse).single()
+            } else {
+                ServerError(context.getString(R.string.errorOccurred)).toErr().single()
+            }
+        }
+    }
+
+    fun getComments(postId: Int): ApiResult<GetCommentResponse> {
+        return postApi.getComments(postId).flatMap {
+            if (it.isSuccessful) {
+                Ok(it.body() as GetCommentResponse).single()
             } else {
                 ServerError(context.getString(R.string.errorOccurred)).toErr().single()
             }

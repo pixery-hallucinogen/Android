@@ -1,9 +1,9 @@
 package com.hackathon.di.module
 
 import android.content.Context
+import android.util.Log
 import com.hackathon.Constants
 import com.hackathon.R
-import com.hackathon.data.api.CommentApi
 import com.hackathon.data.api.PostApi
 import com.hackathon.data.api.UserApi
 import com.hackathon.utils.PreferenceUtils
@@ -24,7 +24,6 @@ class RetrofitClient(
         private val context: Context
 ) {
     fun userApi(): UserApi = getRetrofit().create(UserApi::class.java)
-    fun commentApi(): CommentApi = getRetrofit().create(CommentApi::class.java)
     fun postApi(): PostApi = getRetrofit().create(PostApi::class.java)
 
     private fun getRetrofit(): Retrofit {
@@ -69,9 +68,10 @@ class RetrofitClient(
                     .addInterceptor(object : Interceptor {
                         override fun intercept(chain: Interceptor.Chain): Response {
                             val token: String? = PreferenceUtils.defaultPrefs(context)[Constants.JWT]
-                            if (token != null) {
-                                val request = chain.request().newBuilder().addHeader("Authorization", "Bearer $token").build();
-                                return chain.proceed(request);
+                            Log.d("Pixery", token)
+                            if (!token.isNullOrEmpty()) {
+                                val request = chain.request().newBuilder().addHeader("Authorization", "Bearer $token").build()
+                                return chain.proceed(request)
                             }
                             return chain.proceed(chain.request())
                         }

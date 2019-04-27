@@ -48,10 +48,10 @@
                     android:id="@+id/profile_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
                     android:src="@drawable/fake_profile"
                     app:civ_border_color="#FF000000"
                     app:layout_constraintBottom_toBottomOf="@+id/person"
-                    app:layout_constraintEnd_toStartOf="@+id/person"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/person" />
 
@@ -59,59 +59,55 @@
                     android:id="@+id/map"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="36dp"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_map"
                     app:layout_constraintBottom_toBottomOf="@+id/person"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView"
-                    app:layout_constraintStart_toEndOf="@+id/person"
+                    app:layout_constraintEnd_toStartOf="@+id/comments"
                     app:layout_constraintTop_toTopOf="@+id/person" />
 
                 <ImageView
                     android:id="@+id/comments"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="46dp"
                     android:src="@drawable/ic_comments"
                     app:layout_constraintBottom_toBottomOf="@+id/map"
-                    app:layout_constraintStart_toEndOf="@+id/map"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/map" />
 
                 <ImageView
                     android:id="@+id/like"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="12dp"
                     android:layout_marginEnd="8dp"
+                    android:visibility="gone"
                     android:src="@drawable/ic_like"
                     app:layout_constraintBottom_toBottomOf="@+id/comments"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/comments"
                     app:layout_constraintTop_toTopOf="@+id/comments" />
 
                 <ImageView
                     android:id="@+id/liked"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="12dp"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_liked"
                     app:layout_constraintBottom_toBottomOf="@+id/comments"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/comments"
                     app:layout_constraintTop_toTopOf="@+id/comments" />
-
 
                 <TextView
                     android:id="@+id/likeNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:text="151"
                     android:textColor="#000"
                     app:layout_constraintBottom_toTopOf="@+id/comments"
-                    app:layout_constraintEnd_toEndOf="@+id/liked"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/comments"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -120,13 +116,15 @@
                     android:id="@+id/person"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="52dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:fontFamily="@font/roboto"
                     android:text="Berk Tumer"
                     android:textColor="#000000"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/imageView"
+                    app:layout_constraintEnd_toStartOf="@+id/map"
+                    app:layout_constraintStart_toEndOf="@+id/profile_image"
                     app:layout_constraintTop_toBottomOf="@+id/imageView"
                     app:layout_constraintVertical_bias="0.6" />
 

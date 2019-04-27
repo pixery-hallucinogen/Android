@@ -9,8 +9,8 @@ data class Post(
         val postDate: String,
         val userId: String,
         val location: String,
-        val likeCount: Int,
-        val alreadyLiked: Boolean,
+        var likeCount: Int,
+        var alreadyLiked: Boolean,
         val userPhoto: String? = null,
         val userName: String? = null
 )

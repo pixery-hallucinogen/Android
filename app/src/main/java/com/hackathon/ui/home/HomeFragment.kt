@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hackathon.R
+import com.hackathon.data.model.Post
 import com.hackathon.databinding.HomeFragmentBinding
 import com.hackathon.di.ILogger
 import com.hackathon.ui.base.BaseFragment
@@ -15,6 +17,7 @@ import org.koin.android.ext.android.inject
 class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
     private val logger: ILogger by inject()
     private lateinit var dataBinding: HomeFragmentBinding
+    private var posts: List<Post> = emptyList()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -36,10 +39,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
 
         dataBinding.postRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        // dataBinding.cameraButton.setOnClickListener {
-        //     navigateToCamera()
-        // }
-
+        viewModel.getAccount()
         viewModel.getPosts()
 
         return dataBinding.root
@@ -58,13 +58,22 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
 
         viewModel.onPostsFetched.runWhenFinished(this,
                 onSuccess = {
-                    logger.d("asdasdasd")
-                    dataBinding.postRecyclerView.adapter = PostAdapter(requireContext(), it.posts)
+                    this.posts = it.posts
+                    dataBinding.postRecyclerView.adapter = PostAdapter(this, posts)
                     dataBinding.progressLayout.visibility = View.GONE
                 },
                 onError = {
-                    logger.d("errrrrrrr")
                     dataBinding.progressLayout.visibility = View.GONE
+                })
+
+        viewModel.onPostLiked.runWhenFinished(this,
+                onSuccess = {
+                    val post = posts.first { item -> item.id == it.postId }
+                    post.likeCount += 1
+                    post.alreadyLiked = true
+                    dataBinding.postRecyclerView.adapter?.notifyDataSetChanged()
+                },
+                onError = {
                 })
     }
 
@@ -86,6 +95,11 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
 
     private fun navigateToCamera() {
         navigate(HomeFragmentDirections.actionHomeFragmentToCameraFragment())
+    }
+
+    fun navigateToComments(postId: Int) {
+        val bundle = bundleOf("postId" to postId)
+        navigate(R.id.comments_fragment, bundle)
     }
 
     private fun navigateToLogin() {

@@ -12,4 +12,12 @@ object Constants {
         const val ID = "pixery"
         const val CHANNEL_ID = "pixery_channel"
     }
+
+    const val USER_ID = "USER_ID"
+    const val USER_NAME = "USER_NAME"
+    const val USER_EMAIL = "USER_EMAIL"
+    const val USER_FIRSTNAME = "USER_FIRSTNAME"
+    const val USER_MIDDLENAME = "USER_MIDDLENAME"
+    const val USER_LASTNAME = "USER_LASTNAME"
+    const val USER_IMAGE = "USER_IMAGE"
 }

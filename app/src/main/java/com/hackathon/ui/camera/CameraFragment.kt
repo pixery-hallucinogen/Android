@@ -136,16 +136,16 @@ class CameraFragment : BaseFragment<CameraViewModel>(CameraViewModel::class), ZX
 //    }
 
     override fun handleResult(rawResult: Result?) {
-        dataBinding.cameraView.resumeCameraPreview(this)
-        if (cameraState == CameraState.SCAN && rawResult != null) {
-            vibrate()
-            dataBinding.progressLayout.visibility = View.VISIBLE
-            val data = rawResult.text.split(",")
-            viewModel.getComments(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]))
-            storeId = Integer.parseInt(data[1])
-            productId = Integer.parseInt(data[0])
-            cameraState = CameraState.GET
-        }
+//        dataBinding.cameraView.resumeCameraPreview(this)
+//        if (cameraState == CameraState.SCAN && rawResult != null) {
+//            vibrate()
+//            dataBinding.progressLayout.visibility = View.VISIBLE
+//            val data = rawResult.text.split(",")
+//            viewModel.getComments(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]))
+//            storeId = Integer.parseInt(data[1])
+//            productId = Integer.parseInt(data[0])
+//            cameraState = CameraState.GET
+//        }
     }
 
     private fun askPermission() {

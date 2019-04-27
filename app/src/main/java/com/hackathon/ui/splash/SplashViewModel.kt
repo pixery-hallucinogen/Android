@@ -17,6 +17,7 @@ class SplashViewModel(
 
     fun isLoggedIn(context: Context) {
         val result = PreferenceUtils.defaultPrefs(context).getBoolean(Constants.AUTH_STATUS, false)
-        onAuthResult.trigger(Ok(result))
+        val jwt = PreferenceUtils.defaultPrefs(context).getString(Constants.JWT, "")
+        onAuthResult.trigger(Ok(result && !jwt.isNullOrEmpty()))
     }
 }

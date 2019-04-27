@@ -1,7 +1,6 @@
 package com.hackathon.di
 
 import com.hackathon.Constants
-import com.hackathon.data.repository.CommentRepository
 import com.hackathon.data.repository.PostRepository
 import com.hackathon.data.repository.UserRepository
 import com.hackathon.di.impl.AndroidLogger
@@ -9,9 +8,9 @@ import com.hackathon.di.module.ContextModule
 import com.hackathon.di.module.RetrofitClient
 import com.hackathon.di.module.SchedulersModule
 import com.hackathon.domain.auth.AuthTask
-import com.hackathon.domain.auth.CommentTask
 import com.hackathon.domain.auth.PostTask
 import com.hackathon.ui.camera.CameraViewModel
+import com.hackathon.ui.comments.CommentsViewModel
 import com.hackathon.ui.home.HomeViewModel
 import com.hackathon.ui.login.LoginViewModel
 import com.hackathon.ui.splash.SplashViewModel
@@ -29,17 +28,14 @@ val appModule = module {
 
     // Use Cases
     factory { AuthTask(get(), get()) }
-    factory { CommentTask(get(), get()) }
     factory { PostTask(get(), get()) }
 
     // Repositories
     factory { UserRepository(androidContext(), get(), get()) }
-    factory { CommentRepository(androidContext(), get(), get()) }
     factory { PostRepository(androidContext(), get(), get()) }
 
     // Retrofit
     single { RetrofitClient(androidContext()) }
-    factory { get<RetrofitClient>().commentApi() }
     factory { get<RetrofitClient>().userApi() }
     factory { get<RetrofitClient>().postApi() }
 
@@ -47,5 +43,6 @@ val appModule = module {
     viewModel { HomeViewModel(get(), get(), get(), get()) }
     viewModel { SplashViewModel(get(), get()) }
     viewModel { LoginViewModel(get(), get(), get()) }
-    viewModel { CameraViewModel(get(), get(), get()) }
+    viewModel { CameraViewModel(get(), get()) }
+    viewModel { CommentsViewModel(get(), get(), get(), get()) }
 }
