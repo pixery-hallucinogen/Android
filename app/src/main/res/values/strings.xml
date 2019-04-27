@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Fertilizer</string>
+    <string name="api_url" translatable="false">http://fertilizer.y97khcqbsp.us-west-2.elasticbeanstalk.com</string>
+    <string name="errorOccurred">Error Occurred</string>
+    <string name="retry">Retry</string>
+    <string name="close">Close</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="emptyInfo">Please enter username and password.</string>
+    <string name="invalidInfo">User could not found!</string>
+    <string name="cameraPermission">Camera permission is required to scan QR code!</string>
+    <string name="fastPurchase">Fast Purchase</string>
+    <string name="successfullyPurchased">Successfully purchased</string>
+</resources>

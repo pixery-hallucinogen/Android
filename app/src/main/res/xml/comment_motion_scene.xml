@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:motion="http://schemas.android.com/apk/res-auto">
+    <Transition
+        motion:constraintSetEnd="@layout/comment_motion_end"
+        motion:constraintSetStart="@layout/comment_motion_start"
+        motion:duration="300">
+        <OnSwipe
+            motion:dragDirection="dragUp"
+            motion:moveWhenScrollAtTop="true"
+            motion:touchAnchorId="@+id/test"
+            motion:touchAnchorSide="top" />
+    </Transition>
+
+</MotionScene>
