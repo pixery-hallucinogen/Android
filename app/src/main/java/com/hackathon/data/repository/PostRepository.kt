@@ -1,36 +1,61 @@
 package com.hackathon.data.repository
 
 import android.content.Context
-import com.hackathon.Constants
 import com.hackathon.R
 import com.hackathon.data.api.ApiResult
 import com.hackathon.data.api.PostApi
 import com.hackathon.data.error.ServerError
-import com.hackathon.data.model.PurchaseRequest
+import com.hackathon.data.model.CommentRequest
+import com.hackathon.data.model.CreatePostRequest
+import com.hackathon.data.model.GetPostsResponse
+import com.hackathon.data.model.LikeRequest
 import com.hackathon.di.ILogger
 import com.hackathon.lib.typing.Ok
 import com.hackathon.lib.typing.single
-import com.hackathon.utils.PreferenceUtils
-import com.hackathon.utils.get
 
 
 class PostRepository(
         private val context: Context,
         private val logger: ILogger,
-        private val purchaseApi: PostApi
+        private val postApi: PostApi
 ) {
-    fun purchase(productId: Int, storeId: Int, amount: Int): ApiResult<Unit> {
-        val uid: Int? = PreferenceUtils.defaultPrefs(context)[Constants.UID]
-        return if (uid != null && uid > 0) {
-            purchaseApi.purchase(PurchaseRequest(uid, storeId, productId, amount)).flatMap {
-                if (it.isSuccessful) {
-                    Ok(Unit).single()
-                } else {
-                    ServerError(context.getString(R.string.errorOccurred)).toErr().single()
-                }
+    fun getPosts(): ApiResult<GetPostsResponse> {
+        return postApi.getPosts().flatMap {
+            if (it.isSuccessful) {
+                Ok(it.body() as GetPostsResponse).single()
+            } else {
+                ServerError(context.getString(R.string.errorOccurred)).toErr().single()
             }
-        } else {
-            ServerError(context.getString(R.string.errorOccurred)).toErr().single()
+        }
+    }
+
+    fun commentPost(commentRequest: CommentRequest): ApiResult<Unit> {
+        return postApi.commentPost(commentRequest).flatMap {
+            if (it.isSuccessful) {
+                Ok(Unit).single()
+            } else {
+                ServerError(context.getString(R.string.errorOccurred)).toErr().single()
+            }
+        }
+    }
+
+    fun likePost(likeRequest: LikeRequest): ApiResult<Unit> {
+        return postApi.likePost(likeRequest).flatMap {
+            if (it.isSuccessful) {
+                Ok(Unit).single()
+            } else {
+                ServerError(context.getString(R.string.errorOccurred)).toErr().single()
+            }
+        }
+    }
+
+    fun createPost(createPostRequest: CreatePostRequest): ApiResult<Unit> {
+        return postApi.createPost(createPostRequest).flatMap {
+            if (it.isSuccessful) {
+                Ok(Unit).single()
+            } else {
+                ServerError(context.getString(R.string.errorOccurred)).toErr().single()
+            }
         }
     }
 }

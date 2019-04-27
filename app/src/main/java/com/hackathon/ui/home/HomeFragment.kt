@@ -36,11 +36,11 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
 
         dataBinding.postRecyclerView.layoutManager = LinearLayoutManager(context)
 
-       // dataBinding.cameraButton.setOnClickListener {
-       //     navigateToCamera()
-       // }
+        // dataBinding.cameraButton.setOnClickListener {
+        //     navigateToCamera()
+        // }
 
-        viewModel.fetchRecommendations()
+        viewModel.getPosts()
 
         return dataBinding.root
     }
@@ -56,12 +56,15 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
                     navigateToLogin()
                 })
 
-        viewModel.onRecommendationsFetched.runWhenFinished(this,
+        viewModel.onPostsFetched.runWhenFinished(this,
                 onSuccess = {
-                    dataBinding.postRecyclerView.adapter = PostAdapter(requireContext(), it)
+                    logger.d("asdasdasd")
+                    dataBinding.postRecyclerView.adapter = PostAdapter(requireContext(), it.posts)
+                    dataBinding.progressLayout.visibility = View.GONE
                 },
                 onError = {
-
+                    logger.d("errrrrrrr")
+                    dataBinding.progressLayout.visibility = View.GONE
                 })
     }
 

@@ -32,7 +32,7 @@ class PostAdapter(private val context: Context, private val myDataset: List<Post
 
         Picasso.get().load(myDataset[position].media).into(holder.image)
         holder.person.text = myDataset[position].userName
-        Picasso.get().load(myDataset[position].userPhoto).into(holder.profileImage)
+        Picasso.get().load(myDataset[position].userPhoto).noFade().into(holder.profileImage)
         holder.likeNumber.text = myDataset[position].likeCount.toString()
 
         if (myDataset[position].alreadyLiked) {

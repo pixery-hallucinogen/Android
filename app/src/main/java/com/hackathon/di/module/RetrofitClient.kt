@@ -25,7 +25,7 @@ class RetrofitClient(
 ) {
     fun userApi(): UserApi = getRetrofit().create(UserApi::class.java)
     fun commentApi(): CommentApi = getRetrofit().create(CommentApi::class.java)
-    fun purchaseApi(): PostApi = getRetrofit().create(PostApi::class.java)
+    fun postApi(): PostApi = getRetrofit().create(PostApi::class.java)
 
     private fun getRetrofit(): Retrofit {
 
@@ -66,7 +66,7 @@ class RetrofitClient(
             return OkHttpClient.Builder()
                     .sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
                     .addInterceptor(loggingInterceptor)
-                    .addInterceptor(object: Interceptor {
+                    .addInterceptor(object : Interceptor {
                         override fun intercept(chain: Interceptor.Chain): Response {
                             val token: String? = PreferenceUtils.defaultPrefs(context)[Constants.JWT]
                             if (token != null) {

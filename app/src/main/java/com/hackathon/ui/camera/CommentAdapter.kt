@@ -22,10 +22,10 @@ class CommentAdapter(private val myDataset: GetCommentResponse) : RecyclerView.A
         holder.card.setPadding(0, 0, 0, 0)
         holder.card.useCompatPadding = true
         holder.card.setContentPadding(-6, -6, -6, -6)
-        holder.rating.rating = myDataset.comments[position].star
-        holder.comment.text = myDataset.comments[position].commentBody
-        holder.username.text = myDataset.users[position]
-        holder.date.text = myDataset.comments[position].date
+//        holder.rating.rating = myDataset.comments[position].star
+//        holder.comment.text = myDataset.comments[position].commentBody
+//        holder.username.text = myDataset.users[position]
+//        holder.date.text = myDataset.comments[position].date
     }
 
     override fun getItemCount() = myDataset.comments.size
