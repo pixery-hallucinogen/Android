@@ -9,6 +9,6 @@ import retrofit2.http.GET
 
 
 interface PostApi {
-    @GET("/posts")
+    @GET("/v1/posts")
     fun purchase(@Body purchaseModel: PurchaseRequest): Single<Response<GetPostsResponse>>
 }

@@ -10,9 +10,9 @@ import retrofit2.http.POST
 
 
 interface UserApi {
-    @POST("/account/login")
+    @POST("/v1/account/login")
     fun login(@Body loginModel: LoginRequest): Single<Response<LoginResult>>
 
-    @POST("/account/signUp")
+    @POST("/v1/account/signUp")
     fun signUp(@Body signUpModel: SignUpRequest): Single<Response<Unit>>
 }

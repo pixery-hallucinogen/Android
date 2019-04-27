@@ -9,6 +9,6 @@ import retrofit2.http.POST
 
 
 interface CommentApi {
-    @POST("/comments")
+    @POST("/v1/comments")
     fun getComments(@Body getCommentModel: GetCommentRequest): Single<Response<GetCommentResponse>>
 }

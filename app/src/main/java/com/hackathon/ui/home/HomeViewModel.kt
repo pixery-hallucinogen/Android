@@ -26,7 +26,10 @@ class HomeViewModel(
 
     fun fetchRecommendations() {
         val data = listOf(
-                Post(1, 30.0, 30.0, "https://avatars1.githubusercontent.com/u/50017268?s=200&v=4", "Hello, world!", Date(), "", "Koç university", 10, true  )
+                Post(1, 30.0, 30.0, "https://avatars1.githubusercontent.com/u/50017268?s=200&v=4", "Hello, world!", Date(), "", "Koç university", 10, true,"https://avatars1.githubusercontent.com/u/50017268?s=200&v=4", "Berkay"  ),
+                Post(1, 30.0, 30.0, "https://avatars1.githubusercontent.com/u/50017268?s=200&v=4", "Hello, world!", Date(), "", "Koç university", 10, true,"https://avatars1.githubusercontent.com/u/50017268?s=200&v=4", "Berkay"  ),
+                Post(1, 30.0, 30.0, "https://avatars1.githubusercontent.com/u/50017268?s=200&v=4", "Hello, world!", Date(), "", "Koç university", 10, true,"https://avatars1.githubusercontent.com/u/50017268?s=200&v=4", "Berkay"  ),
+                Post(1, 30.0, 30.0, "https://avatars1.githubusercontent.com/u/50017268?s=200&v=4", "Hello, world!", Date(), "", "Koç university", 10, true,"https://avatars1.githubusercontent.com/u/50017268?s=200&v=4", "Berkay"  )
         )
 
         onRecommendationsFetched.trigger(Ok(data))

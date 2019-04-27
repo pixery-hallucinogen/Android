@@ -98,42 +98,42 @@ class CameraFragment : BaseFragment<CameraViewModel>(CameraViewModel::class), ZX
         dataBinding.cameraView.stopCamera()
     }
 
-    override fun bindCommands() {
-        super.bindCommands()
-
-        viewModel.onCommentsFetched.runWhenFinished(this,
-                onSuccess = {
-                    vibrate()
-                    dataBinding.commentsRecyclerView.adapter = CommentAdapter(it)
-                    cameraState = CameraState.COMMENT
-                    dataBinding.fastPurchaseButton.setOnClickListener {
-                        viewModel.purchase(productId, storeId, dataBinding.numberPicker.value)
-                        dataBinding.progressLayout.visibility = View.VISIBLE
-                    }
-                    dataBinding.productName.text = it.product.first().productName
-                    Picasso.get().load(it.product.first().imageUrl).into(dataBinding.productImage)
-                    dataBinding.rating.text = String.format("%.2f", it.star)
-                    dataBinding.productRating.rating = it.star
-                    dataBinding.progressLayout.visibility = View.GONE
-                    slideToHalf()
-                },
-                onError = {
-                    dataBinding.progressLayout.visibility = View.GONE
-                    cameraState = CameraState.SCAN
-                })
-
-        viewModel.onPurchased.runWhenFinished(this,
-                onSuccess = {
-                    Toast.makeText(requireContext(), getString(R.string.successfullyPurchased), Toast.LENGTH_LONG).show()
-                    dataBinding.progressLayout.visibility = View.GONE
-                    dataBinding.motionLayout.transitionToStart()
-                    cameraState = CameraState.SCAN
-                },
-                onError = {
-                    Toast.makeText(requireContext(), getString(R.string.errorOccurred), Toast.LENGTH_LONG).show()
-                    dataBinding.progressLayout.visibility = View.GONE
-                })
-    }
+//    override fun bindCommands() {
+//        super.bindCommands()
+//
+//        viewModel.onCommentsFetched.runWhenFinished(this,
+//                onSuccess = {
+//                    vibrate()
+//                    dataBinding.commentsRecyclerView.adapter = CommentAdapter(it)
+//                    cameraState = CameraState.COMMENT
+//                    dataBinding.fastPurchaseButton.setOnClickListener {
+//                        viewModel.purchase(productId, storeId, dataBinding.numberPicker.value)
+//                        dataBinding.progressLayout.visibility = View.VISIBLE
+//                    }
+//                    dataBinding.productName.text = it.product.first().post
+//                    Picasso.get().load(it.product.first().imageUrl).into(dataBinding.productImage)
+//                    dataBinding.rating.text = String.format("%.2f", it.star)
+//                    dataBinding.productRating.rating = it.star
+//                    dataBinding.progressLayout.visibility = View.GONE
+//                    slideToHalf()
+//                },
+//                onError = {
+//                    dataBinding.progressLayout.visibility = View.GONE
+//                    cameraState = CameraState.SCAN
+//                })
+//
+//        viewModel.onPurchased.runWhenFinished(this,
+//                onSuccess = {
+//                    Toast.makeText(requireContext(), getString(R.string.successfullyPurchased), Toast.LENGTH_LONG).show()
+//                    dataBinding.progressLayout.visibility = View.GONE
+//                    dataBinding.motionLayout.transitionToStart()
+//                    cameraState = CameraState.SCAN
+//                },
+//                onError = {
+//                    Toast.makeText(requireContext(), getString(R.string.errorOccurred), Toast.LENGTH_LONG).show()
+//                    dataBinding.progressLayout.visibility = View.GONE
+//                })
+//    }
 
     override fun handleResult(rawResult: Result?) {
         dataBinding.cameraView.resumeCameraPreview(this)

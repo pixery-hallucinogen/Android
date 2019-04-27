@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.main_post_layout.view.*
 
 class PostHolder(val view: View) : RecyclerView.ViewHolder(view) {
