@@ -43,10 +43,6 @@
     <string name="ok">OK</string>
     <string name="action_unavailable">Action unavailable</string>
 
-    <!-- urls -->
-    <string name="privacy_policy_url">https://www.google.com/policies/privacy/</string>
-    <string name="terms_url">https://www.google.com/policies/terms/</string>
-
     <!-- Clear Drawing Dialog -->
     <string name="clear_confirmation_message">Clear your drawing?</string>
     <string name="clear_confirmation_title_paired">Clear your drawings?</string>
@@ -88,8 +84,6 @@
     <!-- Co presence -->
     <!-- Anchors -->
     <string name="cancel_anchor" tools:keep="@string/cancel_anchor">Cancel</string>
-
-    <!-- Join Room -->
 
     <!-- AR Sync -->
     <string name="pair_looking_for_partner">Waiting for your partner.\n\nIt works best when you\’re side\u2011by\u2011side.</string>

@@ -21,13 +21,11 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.icu.util.Calendar;
 import android.media.MediaMetadataRetriever;
-import android.media.ThumbnailUtils;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -39,7 +37,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.Config;
@@ -88,7 +85,7 @@ import javax.vecmath.Vector3f;
  * This is a complex example that shows how to create an augmented reality (AR) application using
  * the ARCore API.
  */
-
+@SuppressWarnings("deprecation")
 public class DrawARActivity extends BaseActivity
         implements RecordableSurfaceView.RendererCallbacks, View.OnClickListener,
         RecordButton.Listener, ClearDrawingDialog.Listener, PlaybackView.Listener,
