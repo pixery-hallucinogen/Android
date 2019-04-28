@@ -12,13 +12,16 @@ android {
     }
     defaultConfig {
         applicationId "com.hackathon"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        buildConfigField "boolean", "GLOBAL", "false"
+        buildConfigField "boolean", "SHOW_NAVIGATION", "true"
 
     }
     buildTypes {
@@ -38,8 +41,8 @@ kapt {
 }
 
 dependencies {
+    implementation project(':vecmath')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     // Data Binding
     kapt 'com.android.databinding:compiler:3.3.0-alpha13'
     kapt "com.github.bumptech.glide:compiler:4.4.0"
@@ -101,4 +104,17 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:0.5'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
+
+    implementation 'com.google.ar:core:1.2.0'
+
+    implementation 'com.uncorkedstudios.android:recordable-surfaceview:1.1.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
+
+    implementation 'com.google.firebase:firebase-core:15.0.2'
+    implementation 'com.google.firebase:firebase-database:15.0.1'
+    implementation 'com.google.firebase:firebase-auth:15.1.0'
+    implementation 'com.google.firebase:firebase-crash:15.0.2'
+    implementation 'com.google.android.gms:play-services-nearby:15.0.1'
+
+    implementation 'com.airbnb.android:lottie:2.5.3'
 }

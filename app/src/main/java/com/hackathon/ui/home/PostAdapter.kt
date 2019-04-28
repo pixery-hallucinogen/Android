@@ -28,6 +28,9 @@ class PostAdapter(private val homeFragment: HomeFragment, private val myDataset:
 
         holder.like.setOnClickListener {
             viewModel.likePost(myDataset[position].id)
+            holder.like.visibility = View.GONE
+            holder.liked.visibility = View.VISIBLE
+            holder.likeNumber.text = (myDataset[position].likeCount + 1).toString()
         }
         holder.comments.setOnClickListener {
             homeFragment.navigateToComments(myDataset[position].id)

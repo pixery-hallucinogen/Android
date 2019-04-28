@@ -1,5 +1,6 @@
 package com.hackathon.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import com.hackathon.R
 import com.hackathon.data.model.Post
 import com.hackathon.databinding.HomeFragmentBinding
 import com.hackathon.di.ILogger
+import com.hackathon.justaline.DrawARActivity
 import com.hackathon.ui.base.BaseFragment
 import org.koin.android.ext.android.inject
 
@@ -43,6 +45,18 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
         viewModel.getAccount()
         viewModel.getNearbyPosts(41.0797675f, 29.0064777f)
         viewModel.getPosts()
+
+        dataBinding.bottomNavigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.bottom_nav_home -> TODO()
+                R.id.bottom_nav_create -> {
+                    startActivity(Intent(requireContext(), DrawARActivity::class.java))
+                    true
+                }
+                else -> TODO()
+//                R.id.bottom_nav_home -> "",
+            }
+        }
 
         return dataBinding.root
     }
