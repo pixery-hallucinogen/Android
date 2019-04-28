@@ -8,18 +8,6 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="camera_fragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="500" />
-                            <option name="y" value="12" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="comments_fragment">
                     <value>
                       <LayoutPositions>
@@ -43,11 +31,6 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_home_fragment_to_camera_fragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
                             <entry key="action_home_fragment_to_comments_fragment">
                               <value>
                                 <LayoutPositions />

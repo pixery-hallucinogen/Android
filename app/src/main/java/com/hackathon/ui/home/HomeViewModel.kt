@@ -20,6 +20,7 @@ class HomeViewModel(
         private val authTask: AuthTask,
         private val postTask: PostTask
 ) : BaseViewModel(schedulersModule) {
+    val onNearbyPostsFetched = ObservableResult<GetPostsResponse>()
     val onPostsFetched = ObservableResult<GetPostsResponse>()
     val onUserFetched = ObservableResult<Unit>()
     val onPostLiked = ObservableResult<LikeRequest>()
@@ -30,6 +31,15 @@ class HomeViewModel(
         subscribe(
                 event = onPostsFetched,
                 disposable = { postTask.getPosts() },
+                onSuccess = { it },
+                onError = { Err(ServerError(it.message ?: "Unknown Error")) }
+        )
+    }
+
+    fun getNearbyPosts(lat: Float, lon: Float) {
+        subscribe(
+                event = onNearbyPostsFetched,
+                disposable = { postTask.getNearbyPosts(lat, lon) },
                 onSuccess = { it },
                 onError = { Err(ServerError(it.message ?: "Unknown Error")) }
         )

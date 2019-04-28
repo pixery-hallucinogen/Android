@@ -13,6 +13,9 @@ interface PostApi {
     @GET("/v1/posts")
     fun getPosts(): Single<Response<GetPostsResponse>>
 
+    @GET("/v1/posts/coordinates/{latitude}/{longitude}")
+    fun getNearbyPosts(@Path("latitude") latitude: Float, @Path("longitude") longitude: Float): Single<Response<GetPostsResponse>>
+
     @GET("/v1/posts/comments/{postId}")
     fun getComments(@Path("postId") postId: Int): Single<Response<GetCommentResponse>>
 

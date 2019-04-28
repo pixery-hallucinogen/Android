@@ -38,8 +38,10 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
 
 
         dataBinding.postRecyclerView.layoutManager = LinearLayoutManager(context)
+        dataBinding.nearbyRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         viewModel.getAccount()
+        viewModel.getNearbyPosts(41.0797675f, 29.0064777f)
         viewModel.getPosts()
 
         return dataBinding.root
@@ -66,11 +68,21 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
                     dataBinding.progressLayout.visibility = View.GONE
                 })
 
+        viewModel.onNearbyPostsFetched.runWhenFinished(this,
+                onSuccess = {
+                    dataBinding.nearbyRecyclerView.adapter = NearbyPostAdapter(this, it.posts)
+                },
+                onError = {
+                })
+
         viewModel.onPostLiked.runWhenFinished(this,
                 onSuccess = {
+                    logger.d("success")
                     val post = posts.first { item -> item.id == it.postId }
+                    logger.d(post.likeCount.toString())
                     post.likeCount += 1
                     post.alreadyLiked = true
+                    logger.d(post.likeCount.toString())
                     dataBinding.postRecyclerView.adapter?.notifyDataSetChanged()
                 },
                 onError = {

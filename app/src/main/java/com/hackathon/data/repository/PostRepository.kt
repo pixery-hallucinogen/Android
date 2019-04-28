@@ -26,6 +26,16 @@ class PostRepository(
         }
     }
 
+    fun getNearbyPosts(lat: Float, lon: Float): ApiResult<GetPostsResponse> {
+        return postApi.getNearbyPosts(lat, lon).flatMap {
+            if (it.isSuccessful) {
+                Ok(it.body() as GetPostsResponse).single()
+            } else {
+                ServerError(context.getString(R.string.errorOccurred)).toErr().single()
+            }
+        }
+    }
+
     fun getComments(postId: Int): ApiResult<GetCommentResponse> {
         return postApi.getComments(postId).flatMap {
             if (it.isSuccessful) {

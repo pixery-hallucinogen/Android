@@ -1,5 +1,6 @@
 package com.hackathon.domain.auth
 
+import android.util.Log
 import com.hackathon.data.error.BaseError
 import com.hackathon.data.error.LoginError
 import com.hackathon.data.error.LoginErrorType
@@ -17,6 +18,16 @@ class PostTask(
 ) : BaseTask() {
     fun getPosts(): SingleResult<GetPostsResponse, BaseError> {
         return postRepository.getPosts().map {
+            if (it.isOk)
+                it
+            else
+                LoginError(LoginErrorType.INVALID_INFO).toErr()
+        }
+    }
+
+    fun getNearbyPosts(lat: Float, lon: Float): SingleResult<GetPostsResponse, BaseError> {
+        return postRepository.getNearbyPosts(lat, lon).map {
+            Log.d("Pixery", it.isOk.toString())
             if (it.isOk)
                 it
             else
