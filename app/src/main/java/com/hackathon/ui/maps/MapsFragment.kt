@@ -63,6 +63,7 @@ class MapsFragment : BaseFragment<MapsViewModel>(MapsViewModel::class), OnMapRea
                     googleMap?.moveCamera(CameraUpdateFactory.newLatLng(LatLng(it[0].toDouble(), it[1].toDouble())))
                 }, onError = {
             dataBinding.progressBar.visibility = View.GONE
+            
         })
     }
 }
