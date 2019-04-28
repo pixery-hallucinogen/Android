@@ -74,7 +74,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
 
         viewModel.onPostsFetched.runWhenFinished(this,
                 onSuccess = {
-                    this.posts = it.posts
+                    this.posts = it.posts.filter { a -> !a.media.contains(".mp4") }
                     dataBinding.postRecyclerView.adapter = PostAdapter(this, posts)
                     dataBinding.progressLayout.visibility = View.GONE
                 },
@@ -94,7 +94,7 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
                     logger.d("success")
                     val post = posts.first { item -> item.id == it.postId }
                     logger.d(post.likeCount.toString())
-                    post.likeCount += 1
+                    post.likeCount = post.likeCount!! + 1
                     post.alreadyLiked = true
                     logger.d(post.likeCount.toString())
                     dataBinding.postRecyclerView.adapter?.notifyDataSetChanged()

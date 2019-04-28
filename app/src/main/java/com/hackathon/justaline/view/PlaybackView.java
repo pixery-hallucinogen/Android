@@ -16,10 +16,11 @@ package com.hackathon.justaline.view;
 
 import android.animation.Animator;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -29,16 +30,20 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
 
+import com.google.firebase.storage.FirebaseStorage;
 import com.hackathon.R;
 import com.hackathon.justaline.PermissionHelper;
+import com.hackathon.justaline.Uploader;
 import com.hackathon.justaline.analytics.AnalyticsEvents;
 import com.hackathon.justaline.analytics.Fa;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -53,7 +58,7 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
     private static final String TAG = "PlaybackView";
 
     private static final String FILE_PROVIDER_AUTHORITY
-            = "com.hackathon.justaline.fileprovider";
+            = "com.hackathon.fileprovider";
 
     private File mVideoFile;
 
@@ -67,9 +72,17 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
 
     private Surface mSurface;
 
+    private TextureView mVideoTextureView;
+
+    private ImageView mImageView;
+
     private boolean mIsOpen;
 
     private boolean mPaused = true;
+
+    public boolean isCapture = false;
+
+    FirebaseStorage storage;
 
     private AudioAttributes mAudioAttributes;
 
@@ -93,11 +106,14 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
         inflate(getContext(), R.layout.view_playback, this);
 
         setBackgroundColor(Color.BLACK);
+        storage = FirebaseStorage.getInstance();
 
         mAnalytics = Fa.get();
 
-        TextureView mVideoTextureView = findViewById(R.id.video);
+        mVideoTextureView = findViewById(R.id.video);
         mVideoTextureView.setSurfaceTextureListener(this);
+
+        mImageView = findViewById(R.id.image);
 
         findViewById(R.id.close_button).setOnClickListener(this);
         findViewById(R.id.layout_share).setOnClickListener(this);
@@ -127,8 +143,14 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
         mVideoFile = new File(absoluteFilePath);
         mUri = FileProvider.getUriForFile(getContext(), FILE_PROVIDER_AUTHORITY, mVideoFile);
 
+        Log.d(TAG, mUri.getPath().substring(mUri.getPath().lastIndexOf('.')).toLowerCase() + ", " + mUri.getPath().substring(mUri.getPath().lastIndexOf('.')).toLowerCase().equals(".png"));
+
         if (mSurface != null) {
-            prepareMediaPlayer(mUri);
+            if (mUri.getPath().substring(mUri.getPath().lastIndexOf('.')).toLowerCase().equals(".png")) {
+                prepareImageViewer(mUri);
+            } else {
+                prepareMediaPlayer(mUri);
+            }
         }
 
     }
@@ -157,21 +179,10 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
             }
             mUri = null;
         }
-
-        mMediaPlayer.reset();
-        mMediaPlayer.release();
-    }
-
-    private void share(Uri contentUri) {
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setType("video/mp4");
-        shareIntent
-                .putExtra(Intent.EXTRA_TEXT, getContext().getString(R.string.playback_share_text));
-        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        getContext().startActivity(
-                Intent.createChooser(shareIntent, getContext().getString(R.string.share_with)));
+        if (mMediaPlayer != null) {
+            mMediaPlayer.reset();
+            mMediaPlayer.release();
+        }
     }
 
     private void save(File file) {
@@ -180,7 +191,7 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
             String directoryName = Environment.DIRECTORY_PICTURES;
             File picDirectory = Environment.getExternalStoragePublicDirectory(directoryName);
 
-            File jalPicDirectory = new File(picDirectory, "Just a Line");
+            File jalPicDirectory = new File(picDirectory, "hallucinogen");
 
             // make our directory if it doesn't exist
             if (!jalPicDirectory.exists()) {
@@ -203,6 +214,18 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
             if (mListener != null) {
                 mListener.requestStoragePermission();
             }
+        }
+    }
+
+    private void upload(Boolean isImage) {
+        if (isImage) {
+            mImageView.setDrawingCacheEnabled(true);
+            mImageView.buildDrawingCache();
+            Bitmap bitmap = ((BitmapDrawable) mImageView.getDrawable()).getBitmap();
+
+            new Uploader().upload(getContext(), bitmap);
+        } else {
+            new Uploader().upload(getContext(), mVideoFile);
         }
     }
 
@@ -263,13 +286,12 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
             case R.id.close_button:
                 close();
                 break;
-            case R.id.layout_share:
-                share(mUri);
-                mAnalytics.send(AnalyticsEvents.EVENT_TAPPED_SHARE_RECORDING);
-                break;
             case R.id.layout_save:
                 save(mVideoFile);
                 mAnalytics.send(AnalyticsEvents.EVENT_TAPPED_SAVE);
+                break;
+            case R.id.layout_share:
+                upload(mVideoFile.getPath().substring(mVideoFile.getPath().lastIndexOf('.')).toLowerCase().equals(".png"));
                 break;
         }
     }
@@ -329,7 +351,11 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void prepareMediaPlayer(Uri uri) {
+        if (isCapture)
+            return;
         Log.d(TAG, "prepareMediaPlayer: " + uri);
+        mImageView.setVisibility(View.GONE);
+        mVideoTextureView.setVisibility(View.VISIBLE);
         try {
             mMediaPlayer = new MediaPlayer();
             mMediaPlayer.setOnPreparedListener(this);
@@ -343,12 +369,24 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
         }
     }
 
+    private void prepareImageViewer(Uri uri) {
+        Log.d(TAG, "prepareMediaPlayer: " + uri);
+        mImageView.setVisibility(View.VISIBLE);
+        mVideoTextureView.setVisibility(View.GONE);
+        Picasso.get().load(uri).into(mImageView);
+    }
+
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
         mSurface = new Surface(surfaceTexture);
         if (mUri != null) {
-            prepareMediaPlayer(mUri);
+            if (mUri.getPath().substring(mUri.getPath().lastIndexOf('.')).toLowerCase().equals(".png")) {
+                prepareImageViewer(mUri);
+            } else {
+                prepareMediaPlayer(mUri);
+            }
         }
+
     }
 
     @Override

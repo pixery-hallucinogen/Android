@@ -11,6 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <ImageView
+        android:id="@+id/image"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ImageButton
         android:id="@+id/close_button"
         android:layout_width="wrap_content"
@@ -47,16 +53,6 @@
             android:duplicateParentState="true"
             android:src="@drawable/share_white"
             tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/text_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:clickable="false"
-            android:duplicateParentState="true"
-            android:fontFamily="@font/cool_sans_medium"
-            android:text="@string/playback_share" />
     </LinearLayout>
 
     <LinearLayout
@@ -82,16 +78,6 @@
             android:duplicateParentState="true"
             android:src="@drawable/save_white"
             tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/text_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:clickable="false"
-            android:duplicateParentState="true"
-            android:fontFamily="@font/cool_sans_medium"
-            android:text="@string/playback_save" />
     </LinearLayout>
 
 </merge>

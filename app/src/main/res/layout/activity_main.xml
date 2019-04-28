@@ -13,8 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
@@ -52,6 +51,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageButton
+            android:id="@+id/captureButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_clear"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/record_button"
+            app:layout_constraintStart_toEndOf="@id/record_button"
+            app:layout_constraintTop_toTopOf="@id/record_button" />
+
         <com.hackathon.justaline.view.RecordButton
             android:id="@+id/record_button"
             android:layout_width="wrap_content"
@@ -62,17 +71,17 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".93"/>
+            app:layout_constraintVertical_bias=".93" />
 
         <com.hackathon.justaline.view.BrushSelector
             android:id="@+id/brush_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
+            android:accessibilityTraversalBefore="@id/record_button"
             app:layout_constraintBottom_toBottomOf="@id/record_button"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/record_button"
-            android:accessibilityTraversalBefore="@id/record_button"/>
+            app:layout_constraintRight_toLeftOf="@id/record_button" />
 
         <!-- Overflow Menu -->
         <LinearLayout

@@ -14,8 +14,6 @@
 
 package com.hackathon.justaline.model;
 
-import com.google.android.gms.nearby.messages.Message;
-
 /**
  * Created by Kat on 3/29/18.
  */
@@ -26,38 +24,38 @@ public class RoomData {
 
     private Long timestamp;
 
-    private Message message;
+//    private Message message;
 
     public RoomData(String key, Long timestamp) {
         this.key = key;
         this.timestamp = timestamp;
 
         String messageString = key + "," + timestamp.toString();
-        message = new Message(messageString.getBytes());
+//        message = new Message(messageString.getBytes());
     }
 
-    public RoomData(Message message) {
-        this.message = message;
-        String messageString = new String(message.getContent());
-        String[] parts = messageString.split(",");
-        if (parts.length == 2) {
-            try {
-                key = parts[0];
-                timestamp = Long.parseLong(parts[1]);
-            } catch (RuntimeException e) {
-                throw new MalformedDataException(
-                        "Message does not meet format <int:code>,<long:timestamp>: "
-                                + messageString);
-            }
-        } else {
-            throw new MalformedDataException(
-                    "Message does not meet format <code>,<timestamp>: " + messageString);
-        }
-    }
-
-    public Message getMessage() {
-        return message;
-    }
+//    public RoomData(Message message) {
+//        this.message = message;
+//        String messageString = new String(message.getContent());
+//        String[] parts = messageString.split(",");
+//        if (parts.length == 2) {
+//            try {
+//                key = parts[0];
+//                timestamp = Long.parseLong(parts[1]);
+//            } catch (RuntimeException e) {
+//                throw new MalformedDataException(
+//                        "Message does not meet format <int:code>,<long:timestamp>: "
+//                                + messageString);
+//            }
+//        } else {
+//            throw new MalformedDataException(
+//                    "Message does not meet format <code>,<timestamp>: " + messageString);
+//        }
+//    }
+//
+//    public Message getMessage() {
+//        return message;
+//    }
 
     public String getKey() {
         return key;

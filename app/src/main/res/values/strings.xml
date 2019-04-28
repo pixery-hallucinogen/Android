@@ -56,24 +56,12 @@
 
     <!-- Playback -->
     <string name="playback_share">Share</string>
-    <string name="playback_share_text">#justaline</string>
+    <string name="playback_share_text" translatable="false">#hallucinogen</string>
     <string name="playback_save">Save</string>
 
     <!-- Playback Save strings -->
     <string name="saved">Saved to %1$s directory</string>
     <string name="could_not_save">Sorry, we couldn\'t save your video</string>
-
-    <!-- About -->
-    <string name="title_activity_about">About</string>
-    <string name="terms_of_service">Terms of Service</string>
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="about_text">Just a Line is an AR Experiment that lets you make simple drawings in augmented reality. Draw on your own or with a friend, then hit record and share what you made with #JustaLine.\n\nTo learn more about this project,\nvisit g.co/justaline.</string>
-    <string name="about_text_link">g.co/justaline</string>
-    <string name="jal_url">https://g.co/justaline</string>
-
-    <!-- Share -->
-    <string name="share_with">Share with</string>
-    <string name="share_app_message">https://g.co/justaline</string>
 
     <!-- Searching for surfaces -->
     <string name="tracking_indicator_text_looking">Looking for a place for your line</string>

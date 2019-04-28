@@ -17,23 +17,29 @@ package com.hackathon.justaline;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.icu.util.Calendar;
+import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.Config;
@@ -64,6 +70,7 @@ import com.hackathon.justaline.view.TrackingIndicator;
 import com.uncorkedstudios.android.view.recordablesurfaceview.RecordableSurfaceView;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,8 +95,6 @@ public class DrawARActivity extends BaseActivity
         ErrorDialog.Listener, RoomManager.StrokeUpdateListener {
 
     private static final String TAG = "DrawARActivity";
-
-    private static final boolean JOIN_GLOBAL_ROOM = BuildConfig.GLOBAL;
 
     private static final int TOUCH_QUEUE_SIZE = 10;
 
@@ -160,6 +165,8 @@ public class DrawARActivity extends BaseActivity
     private File mOutputFile;
 
     private BrushSelector mBrushSelector;
+
+    private ImageButton mCaptureButton;
 
     private RecordButton mRecordButton;
 
@@ -233,6 +240,9 @@ public class DrawARActivity extends BaseActivity
 
         mRecordButton = findViewById(R.id.record_button);
         mRecordButton.setEnabled(false);
+
+        mCaptureButton = findViewById(R.id.captureButton);
+        mCaptureButton.setEnabled(false);
 
         // Reset the zero matrix
         Matrix.setIdentityM(mZeroMatrix, 0);
@@ -329,6 +339,11 @@ public class DrawARActivity extends BaseActivity
 
         mRecordButton.reset();
         mRecordButton.setListener(this);
+
+        mCaptureButton.setEnabled(true);
+        mCaptureButton.setOnClickListener(v -> {
+            capture();
+        });
 
         mPlaybackView.setListener(this);
 
@@ -743,6 +758,58 @@ public class DrawARActivity extends BaseActivity
     }
 
 
+    private boolean capture() {
+        mRecordButton.setEnabled(false);
+        mPlaybackView.isCapture = true;
+        boolean startSuccessful = mSurfaceView.startRecording();
+
+        final Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            boolean stoppedSuccessfully;
+            try {
+                stoppedSuccessfully = mSurfaceView.stopRecording();
+            } catch (RuntimeException e) {
+                stoppedSuccessfully = false;
+                Fa.get().exception(e, "Error stopping recording");
+            }
+            try {
+                if (stoppedSuccessfully) {
+
+                    File file = new File(mOutputFile.getPath().replace(".mp4", ".png"));
+
+                    MediaMetadataRetriever media = new MediaMetadataRetriever();
+                    media.setDataSource(mOutputFile.getPath());
+                    Bitmap thumb = media.getFrameAtTime(100, MediaMetadataRetriever.OPTION_CLOSEST);
+
+                    FileOutputStream out = new FileOutputStream(file);
+                    thumb.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    out.close();
+
+                    mRecordButton.setEnabled(true);
+                    openPlayback(file);
+                } else {
+                    // reset everything to try again
+                    onPlaybackClosed();
+                    ErrorDialog.newInstance(R.string.stop_recording_failed, false).show(this);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                mPlaybackView.isCapture = false;
+            }
+        }, 100);
+
+        if (startSuccessful) {
+            hideOverflowMenu();
+            Log.v(TAG, "Recording Started");
+        } else {
+            Toast.makeText(this, R.string.start_recording_failed, Toast.LENGTH_SHORT).show();
+            prepareForRecording();
+        }
+        return startSuccessful;
+    }
+
+
     private void openPlayback(File file) {
         mPlaybackView.open(file);
         hideView(mDrawUiContainer);
@@ -952,31 +1019,16 @@ public class DrawARActivity extends BaseActivity
         showStrokeDependentUI();
     }
 
-    private void shareApp() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_message));
-        startActivity(Intent.createChooser(intent, getString(R.string.share_with)));
-    }
-
 
     @Override
     public void onClick(View v) {
-        boolean hideOverflow = true;
-        boolean hidePairToolTip = true;
         switch (v.getId()) {
-            case R.id.button_overflow_menu:
-                toggleOverflowMenu();
-                hideOverflow = false;
-                break;
             case R.id.menu_item_clear:
                 onClickClear();
                 break;
         }
         mBrushSelector.close();
-        if (hideOverflow) {
-            hideOverflowMenu();
-        }
+        hideOverflowMenu();
     }
 
     @Override
