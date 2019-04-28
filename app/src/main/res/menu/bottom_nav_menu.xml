@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/bottom_nav_home"
-        android:title="@string/logout"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/home"/>
     <item
         android:id="@+id/bottom_nav_create"
-        android:title="@string/logout"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/tri_d"/>
     <item
         android:id="@+id/bottom_nav_aa"
-        android:title="@string/logout"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_map"
+        />
 
 </menu>
