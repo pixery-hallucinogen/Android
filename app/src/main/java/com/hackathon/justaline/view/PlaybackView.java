@@ -38,6 +38,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
 
 import com.google.firebase.storage.FirebaseStorage;
+import com.hackathon.Constants;
 import com.hackathon.R;
 import com.hackathon.justaline.PermissionHelper;
 import com.hackathon.justaline.Uploader;
@@ -75,6 +76,8 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
     private TextureView mVideoTextureView;
 
     private ImageView mImageView;
+
+    private View mProgressLayout;
 
     private boolean mIsOpen;
 
@@ -114,6 +117,7 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
         mVideoTextureView.setSurfaceTextureListener(this);
 
         mImageView = findViewById(R.id.image);
+        mProgressLayout = findViewById(R.id.progressLayout);
 
         findViewById(R.id.close_button).setOnClickListener(this);
         findViewById(R.id.layout_share).setOnClickListener(this);
@@ -218,6 +222,7 @@ public class PlaybackView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void upload(Boolean isImage) {
+        mProgressLayout.setVisibility(View.VISIBLE);
         if (isImage) {
             mImageView.setDrawingCacheEnabled(true);
             mImageView.buildDrawingCache();

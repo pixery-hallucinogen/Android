@@ -48,12 +48,12 @@ class HomeFragment : BaseFragment<HomeViewModel>(HomeViewModel::class) {
 
         dataBinding.bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.bottom_nav_home -> TODO()
+                R.id.bottom_nav_home -> false
                 R.id.bottom_nav_create -> {
                     startActivity(Intent(requireContext(), DrawARActivity::class.java))
                     true
                 }
-                else -> TODO()
+                else -> false
 //                R.id.bottom_nav_home -> "",
             }
         }

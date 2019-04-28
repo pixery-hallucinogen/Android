@@ -38,9 +38,8 @@ class Uploader : KoinComponent {
         val uploadTask = mountainsRef.putBytes(data)
         uploadTask.addOnFailureListener {
             Toast.makeText(context, R.string.errorOccurred, Toast.LENGTH_LONG).show()
-        }.addOnSuccessListener {a ->
+        }.addOnSuccessListener { a ->
             mountainsRef.downloadUrl.addOnSuccessListener {
-                Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
                 CompositeDisposable().add(
                         postTask.createPost(CreatePostRequest(
                                 Post(
@@ -53,7 +52,6 @@ class Uploader : KoinComponent {
                         )).subscribeOn(schedulersModule.io())
                                 .observeOn(schedulersModule.ui())
                                 .subscribe({ result ->
-                                    Toast.makeText(context, "Success2", Toast.LENGTH_LONG).show()
                                     val intent = Intent(context, MainActivity::class.java)
                                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                                     context.startActivity(intent)
@@ -74,7 +72,7 @@ class Uploader : KoinComponent {
         val uploadTask = mountainsRef.putFile(file.toUri())
         uploadTask.addOnFailureListener {
             Toast.makeText(context, R.string.errorOccurred, Toast.LENGTH_LONG).show()
-        }.addOnSuccessListener {a ->
+        }.addOnSuccessListener { a ->
             mountainsRef.downloadUrl.addOnSuccessListener {
                 Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
                 CompositeDisposable().add(

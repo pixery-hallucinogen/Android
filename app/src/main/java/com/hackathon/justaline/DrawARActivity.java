@@ -227,11 +227,8 @@ public class DrawARActivity extends BaseActivity
         mSurfaceView = findViewById(R.id.surfaceview);
         mSurfaceView.setRendererCallbacks(this);
 
-        mOverflowLayout = findViewById(R.id.layout_menu_items);
         mClearDrawingButton = findViewById(R.id.menu_item_clear);
         mClearDrawingButton.setOnClickListener(this);
-        findViewById(R.id.menu_item_about).setOnClickListener(this);
-        findViewById(R.id.menu_item_share_app).setOnClickListener(this);
 
         mUndoButton = findViewById(R.id.undo_button);
 
@@ -703,25 +700,6 @@ public class DrawARActivity extends BaseActivity
                 AnalyticsEvents.VALUE_TRUE);
     }
 
-    private void toggleOverflowMenu() {
-        if (mOverflowLayout.getVisibility() == View.VISIBLE) {
-            hideOverflowMenu();
-        } else {
-            showOverflowMenu();
-        }
-    }
-
-    private void showOverflowMenu() {
-        if (!mPlaybackView.isOpen()) { // only show overflow if not in playback view
-            mOverflowLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void hideOverflowMenu() {
-        mOverflowLayout.setVisibility(View.GONE);
-    }
-
-
     private boolean stopRecording() {
         boolean stoppedSuccessfully;
         try {
@@ -748,7 +726,6 @@ public class DrawARActivity extends BaseActivity
         boolean startSuccessful = mSurfaceView.startRecording();
 
         if (startSuccessful) {
-            hideOverflowMenu();
             Log.v(TAG, "Recording Started");
         } else {
             Toast.makeText(this, R.string.start_recording_failed, Toast.LENGTH_SHORT).show();
@@ -800,7 +777,6 @@ public class DrawARActivity extends BaseActivity
         }, 100);
 
         if (startSuccessful) {
-            hideOverflowMenu();
             Log.v(TAG, "Recording Started");
         } else {
             Toast.makeText(this, R.string.start_recording_failed, Toast.LENGTH_SHORT).show();
@@ -879,10 +855,6 @@ public class DrawARActivity extends BaseActivity
     }
 
     private void closeViewsOutsideTapTarget(MotionEvent tap) {
-        if (isOutsideViewBounds(mOverflowLayout, (int) tap.getRawX(), (int) tap.getRawY())
-                && mOverflowLayout.getVisibility() == View.VISIBLE) {
-            hideOverflowMenu();
-        }
         if (isOutsideViewBounds(mBrushSelector, (int) tap.getRawX(), (int) tap.getRawY())
                 && mBrushSelector.isOpen()) {
             mBrushSelector.close();
@@ -1028,7 +1000,6 @@ public class DrawARActivity extends BaseActivity
                 break;
         }
         mBrushSelector.close();
-        hideOverflowMenu();
     }
 
     @Override
